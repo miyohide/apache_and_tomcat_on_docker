@@ -1,9 +1,16 @@
 version: '3'
 
 services:
-  app:
-    image: tomcat:10-jre17
+  httpd:
+    image: httpd:2.4.57-alpine
     ports:
-      - 8080:8080
+      - 8080:80
+    volumes:
+      - ./conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
+  tomcat:
+    image: tomcat:10.1.11-jre17
+    ports:
+      - 8009
     volumes:
       - ./webapps:/usr/local/tomcat/webapps
+      - ./conf/server.xml:/usr/local/tomcat/conf/server.xml
